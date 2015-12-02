@@ -23,11 +23,16 @@ hbs.registerPartial('footer', fs.readFileSync(__dirname + '/views/footer.html', 
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.multipart());
+app.use(allowCrossDomain);
 app.use(express.static(__dirname + '/public'));
 app.listen(port);
 
 app.get('/', function(req, res) {
   res.render('index',{ga:ga});
+});
+
+app.get('/:title', function(req, res) {
+  res.render('../posts/'+req.params.title,{ga:ga});
 });
 
 app.use(notfound);
@@ -42,4 +47,11 @@ function notfound (req, res, next){
 
   // default to plain-text. send()
   return res.type('txt').send('Page Not found');
+}
+
+function allowCrossDomain(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'https://jsbin.com');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
 }
