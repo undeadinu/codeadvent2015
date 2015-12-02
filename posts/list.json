@@ -1,0 +1,9 @@
+[
+  {
+    "id": "0c714079017a965d67b4",
+    "filename": "01 getting image data on canvas",
+    "date": "2015-12-01T00:00:00.000Z",
+    "title": "Day 1 : Getting image data on canvas",
+    "intro": "Hi there! This will be a series of blog posts exploring image processing with browser and HTML5 `canvas` element. Before we start dive into filers and effects, let's start by looking at how image data is handled on canvas."
+  }
+]

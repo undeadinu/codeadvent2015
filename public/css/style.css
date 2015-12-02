@@ -1,259 +1,130 @@
+html{
+  background: url(/img/ornament4.png);
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-size: 200px;
+}
 body {
   padding: 0;
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family:  "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
   font-weight: 300;
-  font-size: 20px;
-  background-color: #FFFFFF;
+  background-color: RGB(252, 252, 252);
+  font-size:20px;
   color:#333333;
+  background: url(/img/ornament3.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 200px;
 }
 h1{
-  font-family: 'Raleway',sans-serif;
-  font-weight: 100;
-  font-size: 3em;
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 700;
+  font-size: 2.5em;
 }
 h2{
-  font-family: 'Raleway',sans-serif;
-  font-weight: 100;
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 500;
+  margin-bottom: 0px;
   font-size: 2em;
 }
 h3{
-  font-family: 'Raleway',sans-serif;
+  font-family: 'Open Sans',sans-serif;
   font-weight: 100;
   font-size: 1.5em;
 }
 a {
-  color:#49A9B9;
+  color:#001370;
+  text-shadow: 2px 3px white;
+  text-decoration: none;
+}
+p {
+  line-height: 1.6;
+}
+code{
+  background-color: #f3f3f3;
+}
+.post-meta{
+  font-family: 'Open Sans',sans-serif;
+  color:#001370;
+  font-size: 0.9em;
+}
+#main{
+  padding:30px 15px 15px 15px;
 }
 .wrapper{
   width: 80%;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
-  background: white;
 }
-.white-font {
-  color:#FFFFFF;
-}
-.yellow-shadow{
-  text-shadow: 3px 3px #F9C132;
-}
-.center{
-  text-align: center;
-}
-
-#headder{
-
+.snow{
+  width:20px;
 }
 footer > p{
   font-size: 16px;
   text-align: center;
 }
 
-.experience-bttn-container {
-  text-align: center;
-}
-
-.experience-bttn {
-  background-color: blue;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  padding: 0.5em 1em;
-  opacity: 0.7;
-  outline: none;
-  transition: all .2s linear;
-}
-
-.experience-bttn:hover {
-  opacity: 1;
-}
-
-/*
-Form Styling
-*/
-.form{
-  padding:30px;
-  background-color:OldLace;
-}
-
-form{
-  line-height: 1.8em;
-}
-
-form > p{
-  padding-bottom: 15px;
-}
-
-select, input {
-  font-size: 20px;
-}
-
-.style-input{
-  border-bottom: 2px solid rgb(215, 215, 215);
-  background-color: white;
-}
-
-input {
-  padding: 0px 10px;
-  font-family: "Open Sans", sans-serif;
-  font-weight: 300;
-  border: none;
-  background: transparent;
-  color: #333;
-  margin: 0;
-  max-width: 100%;
-}
-
-.styled-select {
-  border-bottom: 2px solid rgb(215, 215, 215);
-  background-color: white;
-  color: #333;
-  margin: 0;
-  overflow: hidden;
-  margin-right: 5px;
-}
-
-select {
-  font-family: "Open Sans", sans-serif;
-  font-weight: 300;
-  color:#333;
-  background: transparent;
-  padding: 5px;
-  line-height: 1;
-  border: 0;
-  height: 30px;
-  max-width: 100%;
-}
-
-#submit {
-  font-size: 26px;
-  color: white;
-  border: 3px solid rgb(255, 255, 255);
-  background-color: orange;
-  margin: .5em 0;
-  cursor: pointer;
-  -webkit-appearance: none;
-}
-#submit:hover{
-  border: 3px solid orange;
-}
-
-#message{
-  padding-left:10px;
-}
-#event_name{
-  width:140px;
-}
-#event_location{
-  width:130px;
-}
-#fee{
-  width:60px;
-}
-
-#prep_time{
-  width:60px;
-}
-#additional_info{
-  width:770px;
-}
-#gender{
-  width:100px;
-}
-
-.note{
-  font-size: 0.7em;
-  display: inline-block;
-}
-
-.autocomplete-suggestions {
-  font-size: 20px;
-  border: 1px solid #999;
-  background: #FFF;
-  cursor: default;
-  overflow: auto;
-}
-.autocomplete-suggestion {
-  padding: 2px 5px;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.autocomplete-selected {
-  background: #F0F0F0;
-}
-.autocomplete-suggestions strong {
-  font-weight: normal;
-  color: rgb(215, 100, 0);
-}
-
-
-/*
-Report styling
-*/
-#report{
-  background: #49A9B9;
-  padding: 1.8em;
-}
-
-.report-card{
-   padding-top: 2em;
-}
-
-.report-card > p.report{
-  color:#fff;
-  font-size: 1.2em;
-  margin-top: 2.7em;
-  margin-bottom:0px;
-}
-
-.date{
-  font-size: 0.9em;
-  margin-top:0px;
+header{
+  font-size: 0.8em;
   text-align: right;
 }
 
-.report-card > p.date > a{
-  color:orange;
-  font-weight: 500;
+#header{
+  text-align: center;
+  padding: 40px 20px 0px 20px;
+  height:160px;
+}
+#header > h1{
+  color:#001370;
+  text-shadow: 2px 2px #FFEB34;
+  margin: 0px;
+  font-size:3em;
+}
+#header > p{
+  font-family: 'Open Sans',sans-serif;
+  color:#001370;
+  text-shadow: 1px 1px white;
+  font-weight: 400;
 }
 
-.showall{
-  font-family: 'Raleway',sans-serif;
-  padding:8px;
-  font-size: 1.1em;
-  background-color: orange;
-  color:white;
-  cursor: pointer;
+.divider{
+  text-align: center;
+}
+
+article h1 {
+  color:#001370;
+  text-shadow: 2px 2px #FFEB34;
+}
+article .date {
+  font-family: 'Open Sans',sans-serif;
+  color:#001370;
+}
+article .post-body{
+  margin-top: 50px;
+}
+article a{
+  color:#001370;
+  text-shadow: 1px 1px white;
 }
 
 
-/*
-Individual card page
-*/
-.single-title > a{
-  text-decoration: none;
-  color:#333;
-}
-.single-card{
-  padding:30px;
-  background-color:OldLace;
-  line-height: 2.4em;
-}
-.single-card > p.report{
-  font-size: 1.5em;
-  margin-bottom:0px;
-}
-
-
-@media(max-width: 768px){
-  body {
-    font-size: 16px;
-  }
+@media(max-width: 900px){
   .wrapper {
-    width: 94%;
-    padding: 0 3%;
+    width: 100%;
+  }
+}
+@media(max-width: 515px){
+  #header > h1{
+    font-size: 1.8em;
+  }
+}
+@media(max-width: 310px){
+  #header > h1{
+    font-size: 1.5em;
+  }
+  #header > p{
+    font-size: 0.7em;
   }
 }
