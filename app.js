@@ -1,5 +1,6 @@
 var fs = require('fs');
 var express = require('express');
+var cors = require('cors');
 var app = express();
 var favicon = require('serve-favicon');
 var hbs = require('hbs');
@@ -23,7 +24,16 @@ hbs.registerPartial('footer', fs.readFileSync(__dirname + '/views/footer.html', 
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.multipart());
-app.use(allowCrossDomain);
+
+var whitelist = ['http://null.jsbin.com', 'https://null.jsbin.com', 'http://localhost:8000'];
+var corsOptions = {
+  origin: function(origin, callback){
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+    callback(null, originIsWhitelisted);
+  }
+};
+app.use(cors(corsOptions));
+
 app.use(express.static(__dirname + '/public'));
 app.listen(port);
 
@@ -50,6 +60,9 @@ function notfound (req, res, next){
 }
 
 function allowCrossDomain(req, res, next) {
+  console.log(req.header('host'))
+  // var origins = ['http://null.jsbin.com','https://null.jsbin.com']
+  // var origin = cors.origin.indexOf(req.header('host').toLowerCase()) > -1 ? req.headers.origin : cors.default;
   res.header('Access-Control-Allow-Origin', 'https://null.jsbin.com');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
