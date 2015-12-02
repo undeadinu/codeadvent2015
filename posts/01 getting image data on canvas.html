@@ -58,6 +58,8 @@ Once the image is in canvas, we can call <code>getImageData()</code> on 2d conte
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github-gist.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
-  {{> ga}}
+    {{#if ga}}
+      {{> ga }}
+    {{/if}}
   </body>
 </html>
