@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+    Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>02: Drawing with Data - kosamari</title>
+    <meta name="title" content="02: Drawing with Data" />
+    <meta name="description" content="" />
+    <meta name="author" content="Mariko Kosaka" />
+  </head>
+
+  <body>
+  <div class="wrapper">
+    <article id="main">
+      <section id="post-header">
+        <a href='/'>back to top</a>
+        <h1>02: Drawing with Data</h1>
+
+        <span class='date'>posted on <time datetime="2015-12-02" pubdate>2015-12-02</time></span>
+      </section>
+      <section class='post-body'>
+        <p>In previous post, we copied an image into 2d canvas and extracted data underneath. The result was an array of rgba values. Let's edit this data and draw something out of it.</p>
+<h2>ImageData = width, height, and color of pixels</h2>
+<p>In previous example, we copied an image into canvas, and extracted data using <code>getImageData()</code> method.</p>
+<p><a class="jsbin-embed" href="http://jsbin.com/lonelez/5/embed?js,console">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.4"></script></p>
+<p>In this sample, we set it to grab entire image by calling <code>context.getImageData(0, 0, width, height)</code>. If you want to extract just a part of image from canvas, you can change arguments like <code>context.getImageData(10, 10, 50, 50)</code> . This will only return 50 x 50 pixel data starting from x:10 y:10 position.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/4581495/11559610/5b680f1a-9988-11e5-89ef-6b66a6d2e041.png" width="80%"></p>
+<p>Inside of <code>data</code> is a series of numbers from 0 - 255. It's the color information of this image lined up in order of red, green, blue, and alpha, from top left (x:0, y:0) corner.</p>
+<pre><code class="language-javascript">var imageData = context.getImageData(0, 0, width, height);
+console.log(imageData.data) 
+//[0, 43, 125, 255, 44, 113, 193, 255, 44, 113, 193, 255, 255, ...]
+</code></pre>
+<p><img src="https://cloud.githubusercontent.com/assets/4581495/11557651/e02b54d0-997b-11e5-8fa3-ee4ad3975508.png" width="80%"></p>
+<p>Since we know width and height of this ImageData, we can calculate position of each color from the index of each element.</p>
+<h3>Edit pixel colors</h3>
+<p>Now that we know about ImageData, let's change an appearance of an image by hand manipulating it.
+Following loop go over each pixel data and increase red value by 30 making it warmer color.</p>
+<pre><code class="language-javascript">var imageData = context.getImageData(0, 0, width, height);
+var pixeldata = imageData.data;
+for(var i=0; i&lt;pixeldata.length; i+=4){
+  pixeldata[i] += 30 // red 
+  // pixeldata[i+1] green
+  // pixeldata[i+2] blue
+  // pixeldata[i+3] alpha
+}
+</code></pre>
+<h3>Draw with edited ImageData</h3>
+<p>To load ImageData object into canvas, we use <code>putImageData</code> method on context.
+<code>context.putImageData(imageData, 0, 0)</code> will draw an image based on edited ImageData.</p>
+<p><a class="jsbin-embed" href="http://jsbin.com/rexucu/5/embed?js,output&amp;height=500px">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.4"></script></p>
+<h3>Working with multiple ImageData</h3>
+<p>Instead of editing image data directly, we can also create new ImageData object by <code>createImageData</code>. Creating new object allows us to preserve original data while making many edited images.</p>
+<pre><code class="language-javascript">var newImageData = context.createImageData(width, height);
+var newPixelData = newImageData.data;
+for(var i=0; i&lt;newPixelData.length; i+=4){
+  newPixelData[i]   = originalPixelData[i];
+  newPixelData[i+1] = originalPixelData[i+1] + 30;
+  newPixelData[i+2] = originalPixelData[i+2];
+  newPixelData[i+3] = originalPixelData[i+3];
+}
+context.putImageData(newImageData, 0, 0);
+</code></pre>
+<p><a class="jsbin-embed" href="http://jsbin.com/qojabo/2/embed?js,output&amp;height=500px">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.4"></script></p>
+<h3>Note on TypedArray</h3>
+<p>Data property of ImageData object use an 'Array like' object called TypedArray. While it looks like a regular JavaScript Array, it is incompatible to each other. Some methods (i.e <code>push</code> and <code>pop</code>) are not provided since the size of TypedArray can not be changed after it is created. This also means you can not create an regular Array and assign it to ImageData.</p>
+<pre><code class="language-javascript">// !! this will not work !!
+var imageData = context.getImageData(0, 0, width, height);
+// assign regular Array to ImageData object
+imageData.data = [0, 43, 125, 255, 44, 113, 193, 255];
+
+context.putImageData(imageData, 0, 0);
+</code></pre>
+<p>Let's look into what Typed Array is in the next post !</p>
+
+      </section>
+    </article>
+    <footer>
+      <p>
+        {{> footer}}
+      </p>
+    </footer>
+  </div>
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github-gist.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    {{#if ga}}
+      {{> ga }}
+    {{/if}}
+  </body>
+</html>

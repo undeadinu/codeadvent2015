@@ -97,6 +97,11 @@ article h1 {
   color:#001370;
   text-shadow: 2px 2px #FFEB34;
 }
+article img{
+  margin-left:auto;
+  margin-right:auto;
+  display: block;
+}
 article .date {
   font-family: 'Open Sans',sans-serif;
   color:#001370;
@@ -115,7 +120,10 @@ article a{
     width: 100%;
   }
 }
-@media(max-width: 515px){
+@media(max-width: 555px){
+  body{
+    font-size: 18px;
+  }
   #header > h1{
     font-size: 1.8em;
   }

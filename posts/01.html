@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+    Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>01: Getting image on canvas with 2d context - kosamari</title>
+    <meta name="title" content="01: Getting image on canvas with 2d context" />
+    <meta name="description" content="" />
+    <meta name="author" content="Mariko Kosaka" />
+  </head>
+
+  <body>
+  <div class="wrapper">
+    <article id="main">
+      <section id="post-header">
+        <a href='/'>back to top</a>
+        <h1>01: Getting image on canvas with 2d context</h1>
+
+        <span class='date'>posted on <time datetime="2015-12-01" pubdate>2015-12-01</time></span>
+      </section>
+      <section class='post-body'>
+        <p>Hi there! This will be a series of blog posts exploring image processing technique with browser and HTML5 Canvas. Before we start dive into filters and effects, let's start by looking at how image data is handled on canvas.</p>
+<h2>Loading an image to browser</h2>
+<p>As web engineer, we take it for granted <code>&lt;img src=&quot;image.jpg&quot;&gt;</code> displays an image in a browser because it is a digital photo. But how does it look like when you are dealing with it in JavaScript?</p>
+<h3>Use Image contractor to create image element</h3>
+<p>The way to create <code>HTMLImageElement</code> (without writing HTML tag) is to use the <code>Image</code> constructor. You create new Image instance add <code>src</code> attribute to it like you type <code>&lt;img src=&quot;image.jpg&quot;&gt;</code>. At this point, <code>img</code> object you created has same properties as 1HTMLImageElement`, in the sample you can see width and height properties are logged on console.</p>
+<p><a class="jsbin-embed" href="http://jsbin.com/hocehe/4/embed?js,console">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.4"></script></p>
+<h2>Draw on canvas</h2>
+<p>Let's try to get not only properties but also the actual data of this image. Canvas in HTML5 has nifty method called <code>getImageData</code> which provides pixel by pixel information about an image.</p>
+<p>Let's start by creating Canvas element. There is no constructor like we used for Image, so we'll have to use <code>createElement()</code> much like you create other HTML element in JavaScript.</p>
+<pre><code class="language-javascript">var canvas = document.createElement('canvas');
+canvas.width = width;
+canvas.height = height;
+</code></pre>
+<p>Let's draw an image into this newly created canvas. It may feel natural to call method on the element itself like <code>canvas.drawImage()</code>...however, in canvas, rendering layer (a layer that handles drawing on browser) is provided as separate thing called <code>context</code>.</p>
+<h3>what is &quot;context&quot; ?</h3>
+<p><img src="https://cloud.githubusercontent.com/assets/4581495/11553426/9c82752a-995c-11e5-8dcb-361e6875ed5d.png" width="80%"></p>
+<p>Context is a layer that handles &quot;what is drawn on where in this canvas&quot;. Much like there are different types of drawing method from oil painting to mixed media collage, you can specify how you want to send drawing instruction (called <code>contextType</code>). For now, we are going to use '2d' context type - which let us draw on canvas by saying &quot;Draw a red circle on x:8, y:10&quot;. Other context type is <code>webgl</code> which use different ways to draw on canvas.
+You can create context by calling <code>getContext('contextType')</code> on canvas element.</p>
+<pre><code class="language-javascript">var context = canvas.getContext('2d');
+</code></pre>
+<h3>&quot;drawImage&quot; and &quot;getImageData&quot;</h3>
+<p>Now we are ready to draw our image into canvas using our 2d context. Following code will draw a red pixel (1pixel x 1pixel rectangle) at position x:5 y:10 from top left corner.</p>
+<pre><code>var context = canvas.getContext('2d');
+context.fillStyle = 'red';
+context.fillRect(5, 10, 1, 1);
+</code></pre>
+<p>Let's say you have a 100 pixel by 100 pixel image and a magnifying glass, you can repeat above code for 10000 times to copy an image into canvas...but that's a lot of work.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/4581495/11554589/51775fb8-9967-11e5-96bc-93a6e30a67bc.gif" width="80%"></p>
+<p>Since we already have Image object, we can use <code>drawImage()</code> method on context to auto copy image into canvas. Once the image is copied, we can call <code>getImageData()</code> on 2d context to see data underneath the canvas.</p>
+<p><a class="jsbin-embed" href="http://jsbin.com/lonelez/5/embed?js,console">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.4"></script></p>
+<p>As you can see in the example, context returned <code>ImageData</code> object which contains width, height, and data of the canvas which is an Array of red, green, blue, and alpha value. We'll start using this data to manipulate appearance of an image.</p>
+
+      </section>
+    </article>
+    <footer>
+      <p>
+        {{> footer}}
+      </p>
+    </footer>
+  </div>
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github-gist.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+    {{#if ga}}
+      {{> ga }}
+    {{/if}}
+  </body>
+</html>

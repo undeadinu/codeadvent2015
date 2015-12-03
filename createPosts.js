@@ -26,18 +26,36 @@ fs.readFile('./posts/post_template.html','utf8', function (err, data) {
     response.on('end', function () {
       var res = JSON.parse(str);
       var file = res.files[Object.keys(res.files)[0]];
-      var html = md.render(file.content);
+      var pageTitle = file.content.split('\n')[0].replace('# ','');
       var title = md.render(file.content.split('\n')[0]);
       var content = md.render(file.content.split('\n').splice(1).join('\n'));
-      var filename = file.filename.split('.')[0];
+      var filename = file.filename.split('.')[0].split(' ')[0];
       var date = new Date(modifiedDate||res.created_at);
+
+      //append JSBig tags
+      //{{jsbin:url}}
+      var reg = /\{\{jsbin:([^\}]+)\}\}/g;
+      var found;
+      while (found = reg.exec(content)) {
+          var tag = '<a class="jsbin-embed" href="'+found[1]+'">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.4"></script>';
+          content = content.replace(found[0], tag);
+      }
+
+      // append imges
+      var reg2 = /\{\{img:([^\}]+)\}\}/g;
+      var found2;
+      while (found2 = reg2.exec(content)) {
+          var tag2 = '<img src="'+found2[1]+'" width="80%">';
+          content = content.replace(found2[0], tag2);
+      }
 
       template = template
                   .replace(/{{date}}/g,date.toISOString().split('T')[0])
-                  .replace(/{{filename}}/g, filename.split('-').join(' '))
+                  .replace(/{{filename}}/g, filename)
                   .replace(/{{description}}/g, res.description)
+                  .replace(/{{pageTitle}}/g, pageTitle)
                   .replace(/{{title}}/g, title)
-                  .replace('{{content}}',content );
+                  .replace('{{content}}', content);
 
       fs.writeFile('./posts/'+filename+'.html', template , function (err) {
         if (err) throw err;
