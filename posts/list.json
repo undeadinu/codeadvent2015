@@ -11,13 +11,13 @@
     "filename": "02",
     "date": "2015-12-02T15:11:53.000Z",
     "title": "02: Drawing with Data",
-    "intro": "In previous post, we copied an image into 2d canvas and extracted data underneath. The result was an array of rgba values. Let's edit this data and draw something out of it."
+    "intro": "In the previous post, we copied an image into 2d canvas and extracted the underlying data. The result was an array of rgba values. Let's edit this data and draw something with it."
   },
   {
     "id": "0c714079017a965d67b4",
     "filename": "01",
     "date": "2015-12-01T00:00:00.000Z",
     "title": "01: Getting image on canvas with 2d context",
-    "intro": "Hi there! This will be a series of blog posts exploring image processing technique with browser and HTML5 Canvas. Before we start dive into filters and effects, let's start by looking at how image data is handled on canvas."
+    "intro": "Hi there! This will be a series of blog posts exploring image processing technique with a browser and HTML5 Canvas. Before we start and dive into filters and effects, let's start by looking at how image data is handled on the canvas."
   }
 ]
