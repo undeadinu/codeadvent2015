@@ -65,7 +65,7 @@ Float64Array      // 8 64-bit IEEE floating point number
 <h3>Overflow and &quot;Clamped&quot;</h3>
 <p>What if we assign a value larger than it can handle? In other words, what happens if we put too much batter in each muffin tin?</p>
 <p>Most Typed Arrays take care of this situation by only talking overflow. If you try to assign 280 into an <code>Unit8Array</code> (limited to 0 - 255), it will only keep 24 (280 - 256 = 24).</p>
-<pre><code class="language-javascript">var typedArray = new Int8Array(1);
+<pre><code class="language-javascript">var typedArray = new Uint8Array(1);
 typedArray[0] = 280;
 console.log(typedArray)   // [24]
 </code></pre>
@@ -77,7 +77,7 @@ for(var i=0; i&lt;imageData.length; i+=4){
 </code></pre>
 <p>If the original color already had value of 255, and then we added 30, it will try to assign 285 to ImageData object which use <code>Uint8ClampedArray</code>, thus size of red is kept to max value of 255.</p>
 <p>If it was using non-clamped array like <code>Unit8Array</code>, it will only take overflow of 29 which turns color darker instead of brightening it. In color value, lowest is always 0 and highest is always 255, in other words a pixel can only be brightened to 255 and darkened to 0. Clamped Array is designed to take care of these situation easily by always choosing closest value to it's size when overflow happens.</p>
-<pre><code class="language-javascript">var typedArray = new Int8ClampedArray(3);
+<pre><code class="language-javascript">var typedArray = new Uint8ClampedArray(3);
 typedArray[0] = 280;
 typedArray[0] = 230;
 typedArray[0] = -30;
