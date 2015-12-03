@@ -10,8 +10,8 @@
 
     <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>03: What the heck is TypedArray - kosamari</title>
-    <meta name="title" content="03: What the heck is TypedArray" />
+    <title>03: What the heck is Typed Array - kosamari</title>
+    <meta name="title" content="03: What the heck is Typed Array" />
     <meta name="description" content="" />
     <meta name="author" content="Mariko Kosaka" />
   </head>
@@ -21,24 +21,69 @@
     <article id="main">
       <section id="post-header">
         <a href='/'>back to top</a>
-        <h1>03: What the heck is TypedArray</h1>
+        <h1>03: What the heck is Typed Array</h1>
 
         <span class='date'>posted on <time datetime="2015-12-03" pubdate>2015-12-03</time></span>
       </section>
       <section class='post-body'>
-        <p>Why does canvas use TypedArray for image data ? doesn't JavaScript already have an Array?</p>
-<h2>Regular Array is an oven sheet</h2>
-<p><img src=" oven" width="80%"><em>it can hold various shapes and sizes. (Photo by</em></p>
-<h2>TypedArray is muffin tin</h2>
-<p><img src=" muffin" width="80%"><em>Optimized for specific shape and size. (Photo by</em></p>
-<h3>Note on &quot;Clamped&quot;</h3>
-<p>So we now know TypedArray has specific size each element can hold, but what if we assigned value of more than its size? What happens if we put too much batter in each muffin tin?
-Not clamped array takes care of this situation by only talking over flow. So if you try to assign 280 into an element in Unit8Array, it will only assign 24 (280 - 256 = 24).</p>
-<pre><code class="language-javascript">
+        <p>Why does Canvas use Typed Array to handle data? Why can't we use regular Array? Let's look into Typed Array - what it is and when to use them.</p>
+<h2>Regular Array - an oven sheet</h2>
+<p><em>It can hold various shapes and sizes.</em></p>
+<p>Regular JavaScript Array is very versatile. It can holed mix of data types and can be expanded or shortened as you go.</p>
+<pre><code class="language-javascript">var array = [];
+array[0] = 1;
+array.push(2);
+array[2] = {};
+array.push('string')
+// array now looks like : [1,2,{},'string']
 </code></pre>
-<p>&quot;Clamped&quot; array takes care of this situation differently. Let's think about a case when we changed value of red. If the original color already had value of 255 and we added 30, it will try to assign 285 in our image data array. If this array was using Unit8Array then it will only take over flow which is 29. We'll end up in much dark red even though we wanted to brighten it. In color value, lowest is always 0 and highest is always 255. Clamped Array is designed to take care of there situation by alway choosing clossed value to the size.</p>
-<p><img src=" anatomy of typed array" width="80%"></p>
-<p>Now we know how to get data from original image, edit color of each pixel, and re-draw edited image. Next let's look into different method to process image like gray scale.</p>
+<p><img src="https://cloud.githubusercontent.com/assets/4581495/11562944/0c2c2956-999f-11e5-910c-1678ee975e2b.jpg" width="80%"></p>
+<p>It is like an oven sheet in your home, you can bake various sizes of cinnamon buns, or cook Turkey and Brussels Sprouts at the same time for holiday dinner. While versatility is useful, it means regular JavaScript Array has to account for many possible occasion and is not so great at performance.</p>
+<h2>Typed Array - a muffin pan</h2>
+<p><em>Optimized for specific shape and size.</em></p>
+<p>Typed Arrays are array-like objects that is designed to only handle raw binary data. There are 9 different types depending on size of each element (how many bytes it holds) and how binary data is handled.
+As this is different from regular Array, not all methods in regular Array are available for Typed Arrays (i.e. <code>push</code> and <code>pop</code>). Also calling <code>Array.isArray()</code> with Typed Array returns false.</p>
+<pre><code>var typedArray = new Int8Array(2); //creates an array pre-filled with 0
+typedArray[0] = 240;
+typedArray[1] = 'string'; // will remain 0 since string is not binary
+console.log(typedArray)   // [240, 0]
+</code></pre>
+<p><img src="https://cloud.githubusercontent.com/assets/4581495/11562962/29f0abce-999f-11e5-9595-324672389339.jpg" width="80%"></p>
+<p>You can think of Typed Arrays as different baking molds at professional bakery. Weather its Muffin or Madeleine, those molds are designed to handle same amount of batter for same shape of baked goods. There are no flexibility to cook Turkey, but it is very efficient at making lots and lots of same shaped goods.</p>
+<h3>Anatomy of Typed Arrays</h3>
+<p><img src="https://cloud.githubusercontent.com/assets/4581495/11565977/74623808-99ae-11e5-9d2e-ec444f6cada1.png" width="80%"></p>
+<pre><code>Int8Array         // 8-bit two's complement signed integer
+Uint8Array        // 8-bit unsigned integer
+Uint8ClampedArray // 8-bit unsigned integer (clamped)
+Int16Array        // 16-bit two's complement signed integer
+Uint16Array       // 16-bit unsigned integer
+Int32Array        // 32-bit two's complement signed integer
+Uint32Array       // 32-bit unsigned integer
+Float32Array      // 32-bit IEEE floating point number
+Float64Array      // 8 64-bit IEEE floating point number
+</code></pre>
+<h3>Overflow and &quot;Clamped&quot;</h3>
+<p>What if we assign a value larger than it can handle? In other words, what happens if we put too much batter in each muffin tin?</p>
+<p>Most Typed Arrays take care of this situation by only talking overflow. If you try to assign 280 into an <code>Unit8Array</code> (limited to 0 - 255), it will only keep 24 (280 - 256 = 24).</p>
+<pre><code class="language-javascript">var typedArray = new Int8Array(1);
+typedArray[0] = 280;
+console.log(typedArray)   // [24]
+</code></pre>
+<p>&quot;Clamped&quot; Typed Array, on the other hand, takes care of this by taking value closest to it's size. Let's think about the sample in previous post which we increased color of red by 30.</p>
+<pre><code class="language-javascript">var imageData = context.getImageData(0, 0, width, height).data;
+for(var i=0; i&lt;imageData.length; i+=4){
+  imageData[i] += 30
+}
+</code></pre>
+<p>If the original color already had value of 255, and then we added 30, it will try to assign 285 to ImageData object which use <code>Uint8ClampedArray</code>, thus size of red is kept to max value of 255.</p>
+<p>If it was using non-clamped array like <code>Unit8Array</code>, it will only take overflow of 29 which turns color darker instead of brightening it. In color value, lowest is always 0 and highest is always 255, in other words a pixel can only be brightened to 255 and darkened to 0. Clamped Array is designed to take care of these situation easily by always choosing closest value to it's size when overflow happens.</p>
+<pre><code class="language-javascript">var typedArray = new Int8ClampedArray(3);
+typedArray[0] = 280;
+typedArray[0] = 230;
+typedArray[0] = -30;
+console.log(typedArray)   // [255, 230, 0]
+</code></pre>
+<p>Now we know more about data that consists image. Let's start applying image processing technique in next post.</p>
 
       </section>
     </article>

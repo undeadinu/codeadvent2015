@@ -68,8 +68,8 @@ for(var i=0; i&lt;newPixelData.length; i+=4){
 context.putImageData(newImageData, 0, 0);
 </code></pre>
 <p><a class="jsbin-embed" href="http://jsbin.com/qojabo/2/embed?js,output&amp;height=500px">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.35.4"></script></p>
-<h3>Note on TypedArray</h3>
-<p>Data property of ImageData object use an 'Array like' object called TypedArray. While it looks like a regular JavaScript Array, it is incompatible to each other. Some methods (i.e <code>push</code> and <code>pop</code>) are not provided since the size of TypedArray can not be changed after it is created. This also means you can not create an regular Array and assign it to ImageData.</p>
+<h3>Note on Typed Array</h3>
+<p>Data property of ImageData object use an 'Array like' object called Typed Array. While it looks like a regular JavaScript Array, it is incompatible to each other. Some methods (i.e <code>push</code> and <code>pop</code>) are not provided since the size of Typed Array can not be changed after it is created. This also means you can not create an regular Array and assign it to ImageData.</p>
 <pre><code class="language-javascript">// !! this will not work !!
 var imageData = context.getImageData(0, 0, width, height);
 // assign regular Array to ImageData object

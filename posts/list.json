@@ -1,5 +1,12 @@
 [
   {
+    "id": "377543d44c9463e41745",
+    "filename": "03",
+    "date": "2015-12-03T10:10:23.000Z",
+    "title": "03: What the heck is Typed Array",
+    "intro": "Why does Canvas use Typed Array to handle data? Why can't we use regular Array? Let's look into Typed Array - what it is and when to use them."
+  },
+  {
     "id": "ef8468c929a2889f694e",
     "filename": "02",
     "date": "2015-12-02T15:11:53.000Z",
